@@ -37,11 +37,15 @@ public class Scheduler {
                 double currentTimeBeforeEvent = currentTime;
                 currentTime = event.getTime();
                 event.setWasExecuted();
-                processedEvents.add(event);
                 if (queues.size() > 1 && event.isOut() && queues.get(queues.size() - 1).getId() != event.getFrom()) {
-                    Queue queue = queues.get(event.getFrom() + 1);
-                    queue.execute(this, event.toPass(), currentTimeBeforeEvent);
+                    Queue toQueue = queues.get(event.getFrom() + 1);
+                    Queue fromQueue = queues.get(event.getFrom());
+                    Event pass = event.toPass();
+                    fromQueue.executePass(this);
+                    processedEvents.add(pass);
+                    toQueue.execute(this, pass, currentTimeBeforeEvent);
                 } else {
+                    processedEvents.add(event);
                     Queue queue = queues.get(event.getFrom());
                     queue.execute(this, event, currentTimeBeforeEvent);
                 }
@@ -55,20 +59,21 @@ public class Scheduler {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Scheduler: \n");
+        builder.append("\n=============================\n");
         queues.forEach(queue -> builder.append(queue.print(this)));
         long totalLoss = queues.stream().mapToLong(Queue::getLoss).sum();
         builder.append("\n=============================\n");
         builder.append("Perda Total: ").append(totalLoss);
         builder.append("\n=============================\n");
-        builder.append("Eventos Processados: ");
+        builder.append("Eventos Processados: \n");
         IntStream.range(0, processedEvents.size())
                         .forEach(idx -> builder.append("\t")
                                 .append(idx).append(": ")
                                 .append(processedEvents.get(idx))
                                 .append("\n"));
         builder.append("\n=============================\n");
-        builder.append("Eventos: ");
-        eventList.forEach(event -> builder.append(event).append("\n"));
+        builder.append("Eventos: \n");
+        eventList.forEach(event -> builder.append("\t").append(event).append("\n"));
 
         return builder.toString();
     }

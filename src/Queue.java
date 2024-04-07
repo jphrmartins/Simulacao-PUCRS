@@ -29,6 +29,10 @@ public class Queue {
         return timeBusy;
     }
 
+    public void executePass(Scheduler scheduler) {
+        this.handleOut(scheduler);
+    }
+
     public void execute(Scheduler scheduler, Event event, double currentTimeBeforeEvent) {
         timeBusy[currentCapacity] += (event.getTime() - currentTimeBeforeEvent);
         if (event.isIn()) {
@@ -40,32 +44,6 @@ public class Queue {
         } else {
             throw new RuntimeException("Evento: " + event.getType() + " Não conhecido");
         }
-    }
-
-    public String print(Scheduler scheduler) {
-        StringBuilder builder = new StringBuilder("Fila: " + id + "\n");
-
-        builder.append("Tempos por posicao: \n\n");
-        for (int i = 0; i < timeBusy.length; i++)
-            builder.append("\t Ocupacao: ").append(i).append(" -> Tempo: ").append(timeBusy[i]).append("\n");
-
-        builder.append("\n===================\n");
-        builder.append("Distribuição probabilidades por posição: \n");
-
-        for (int i = 0; i < timeBusy.length; i++) {
-            double probabilidadeAtual = (timeBusy[i] / scheduler.getCurrentTime()) * 100;
-            builder.append("\t Ocupacao: ").append(i).append(" -> ")
-                    .append(probabilidadeAtual).append(" %")
-                    .append("\n");
-        }
-
-        builder.append("\n===================\n");
-        builder.append("Quantidade de Perda:\n");
-        builder.append(loss);
-
-        builder.append("\n===================\n");
-
-        return builder.toString();
     }
 
     private void handleIn(Scheduler scheduler, boolean isPass) {
@@ -94,5 +72,30 @@ public class Queue {
                 scheduler.schedule(timeHandler.nextOut(scheduler.getCurrentTime(), id));
             }
         }
+    }
+
+    public String print(Scheduler scheduler) {
+        StringBuilder builder = new StringBuilder("Fila: " + id + "\n");
+
+        builder.append("Tempos por posicao: \n");
+        for (int i = 0; i < timeBusy.length; i++)
+            builder.append("\t Ocupacao: ").append(i).append(" -> Tempo: ").append(timeBusy[i]).append("\n");
+
+        builder.append("\n===================\n");
+        builder.append("Distribuição probabilidades por posição: \n");
+
+        for (int i = 0; i < timeBusy.length; i++) {
+            double probabilidadeAtual = (timeBusy[i] / scheduler.getCurrentTime()) * 100;
+            builder.append("\t Ocupacao: ").append(i).append(" -> ")
+                    .append(probabilidadeAtual).append(" %")
+                    .append("\n");
+        }
+
+        builder.append("\n===================\n");
+        builder.append("Quantidade de Perda: ");
+        builder.append(loss);
+        builder.append("\n===================\n\n");
+
+        return builder.toString();
     }
 }

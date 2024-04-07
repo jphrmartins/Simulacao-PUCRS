@@ -22,18 +22,17 @@ public class Main {
         System.out.println("Starting with index: " + i + " and seed: " + seeds[i]);
         Random random = new RandomWIthLimit(seeds[i], limit);
         Scheduler scheduler = new Scheduler()
-                .withQueue(new QueueBuilder(random) //g/g/1/5 2..5 3..5
-                        .withIntervaloEntrada(2, 5)
-                        .withIntervaloSaida(3,5)
+                .withQueue(new QueueBuilder(random) //g/g/2/3 1..4 3..4
+                        .withIntervaloEntrada(1, 4)
+                        .withIntervaloSaida(3,4)
+                        .withServidoresDisponiveis(2)
+                        .withCapcidadeMaxima(3)
+                        .build())
+                .withQueue(new QueueBuilder(random) //g/g/1/5 2..3
+                        .withIntervaloSaida(2,3)
                         .withServidoresDisponiveis(1)
                         .withCapcidadeMaxima(5)
                         .build());
-//                .withQueue(new QueueBuilder(random) //g/g/2/5 2..5 3..5
-//                        .withIntervaloEntrada(2, 5)
-//                        .withIntervaloSaida(3,5)
-//                        .withServidoresDisponiveis(2)
-//                        .withCapcidadeMaxima(5)
-//                        .build());
         scheduler.execute(2.0);
         save(scheduler, i);
     }

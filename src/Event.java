@@ -10,6 +10,11 @@ public class Event {
         this.from = from;
     }
 
+    private Event(Type type, double time, int from, boolean executed) {
+        this(type, time, from);
+        this.executed = executed;
+    }
+
     public static Event newOut(double tempo, int from) {
         return new Event(Type.OUT, tempo, from);
     }
@@ -19,7 +24,7 @@ public class Event {
     }
 
     public Event toPass() {
-        return new Event(Type.PASS, this.time, this.from);
+        return new Event(Type.PASS, this.time, this.from, this.executed);
     }
 
     public boolean isIn() {
@@ -56,10 +61,11 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Evento{" +
-                "tipo=" + type +
-                ", tempo=" + time +
+        return "Event{" +
+                "Type=" + type +
+                ", time=" + time +
                 ", executed=" + executed +
+                ", from=" + from +
                 '}';
     }
 

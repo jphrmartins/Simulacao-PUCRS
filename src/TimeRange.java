@@ -12,7 +12,8 @@ public class TimeRange {
     }
 
     public double next() {
-        return (max - min) * random.nextDouble() + min;
+        double rand = random.nextDouble();
+        return (max - min) * rand + min;
 
     }
 

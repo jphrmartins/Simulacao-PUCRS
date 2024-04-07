@@ -19,9 +19,6 @@ public class TimeRange {
 
     @Override
     public String toString() {
-        return "IntervaloTempo{" +
-                "min=" + min +
-                ", max=" + max +
-                '}';
+        return min + ".." + max;
     }
 }

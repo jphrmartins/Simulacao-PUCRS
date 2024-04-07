@@ -59,6 +59,7 @@ public class Scheduler {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Scheduler: \n");
+        builder.append("Tempo final: ").append(currentTime).append("\n");
         builder.append("\n=============================\n");
         queues.forEach(queue -> builder.append(queue.print(this)));
         long totalLoss = queues.stream().mapToLong(Queue::getLoss).sum();

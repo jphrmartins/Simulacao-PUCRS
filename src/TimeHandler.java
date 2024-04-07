@@ -16,4 +16,16 @@ public class TimeHandler {
         double next = out.next();
         return Event.newOut(globalTime + next, from);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        if (in != null) {
+            builder.append("IN: ")
+                    .append(in).append(" ");
+        }
+        builder.append("OUT: ").append(out);
+        return builder.toString();
+    }
 }

@@ -76,7 +76,14 @@ public class Queue {
 
     public String print(Scheduler scheduler) {
         StringBuilder builder = new StringBuilder("Fila: " + id + "\n");
-
+        builder.append("Notacao: ")
+                .append("g/g/")
+                .append(servers)
+                .append("/")
+                .append(maxCapacity)
+                .append(" ")
+                .append(timeHandler)
+                .append("\n");
         builder.append("Tempos por posicao: \n");
         for (int i = 0; i < timeBusy.length; i++)
             builder.append("\t Ocupacao: ").append(i).append(" -> Tempo: ").append(timeBusy[i]).append("\n");

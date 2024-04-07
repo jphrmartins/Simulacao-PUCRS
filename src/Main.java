@@ -33,7 +33,7 @@ public class Main {
                         .withServidoresDisponiveis(1)
                         .withCapcidadeMaxima(5)
                         .build());
-        scheduler.execute(2.0);
+        scheduler.execute(1.5);
         save(scheduler, i);
     }
 

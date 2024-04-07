@@ -30,7 +30,7 @@ public class Scheduler {
 
     public void execute(double firstIn) {
         try {
-            eventList.add(Event.newIn(firstIn, -1));
+            eventList.add(Event.newIn(firstIn, 0));
             while (true) {
                 Event event = proxEvento();
                 double currentTimeBeforeEvent = currentTime;

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Scheduler {
     private double currentTime;
@@ -60,7 +61,11 @@ public class Scheduler {
         builder.append("Perda Total: ").append(totalLoss);
         builder.append("\n=============================\n");
         builder.append("Eventos Processados: ");
-        processedEvents.forEach(event -> builder.append(event).append("\n"));
+        IntStream.range(0, processedEvents.size())
+                        .forEach(idx -> builder.append("\t")
+                                .append(idx).append(": ")
+                                .append(processedEvents.get(idx))
+                                .append("\n"));
         builder.append("\n=============================\n");
         builder.append("Eventos: ");
         eventList.forEach(event -> builder.append(event).append("\n"));

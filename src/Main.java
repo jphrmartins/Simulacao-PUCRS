@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String[] args) {
         boolean paralelo = false;
-        int laco = 100000;
+        int limit = 100000;
         long[] seeds = {8106721679461579810L};
 
         IntStream executions = IntStream.range(0, seeds.length);
@@ -15,41 +15,33 @@ public class Main {
         if (paralelo) {
             executions = executions.parallel();
         }
-        executions.forEach(i -> execute(i, seeds, laco));
+        executions.forEach(i -> execute(i, seeds, limit));
     }
 
-    private static void execute(int i, long[] seeds, int laco) {
+    private static void execute(int i, long[] seeds, int limit) {
         System.out.println("Starting with index: " + i + " and seed: " + seeds[i]);
-        Random random = new Random(seeds[i]);
-        Fila[] filas = {
-                new FilaBuilder(random) //g/g/1/5 2..5 3..5
+        Random random = new RandomWIthLimit(seeds[i], limit);
+        Scheduler scheduler = new Scheduler()
+                .withQueue(new QueueBuilder(random) //g/g/1/5 2..5 3..5
                         .withIntervaloEntrada(2, 5)
                         .withIntervaloSaida(3,5)
-                        .withPrimeiraChegadaEm(2)
                         .withServidoresDisponiveis(1)
                         .withCapcidadeMaxima(5)
-                        .contaPerda(true)
-                        .build(),
-                new FilaBuilder(random) //g/g/2/5 2..5 3..5
-                        .withIntervaloEntrada(2, 5)
-                        .withIntervaloSaida(3,5)
-                        .withPrimeiraChegadaEm(2)
-                        .withServidoresDisponiveis(2)
-                        .withCapcidadeMaxima(5)
-                        .contaPerda(true)
-                        .build()
-        };
-        for (Fila fila : filas) {
-            System.out.println("Executing fila: " + fila.getId() + " execution: " + (i + 1));
-            fila.executa(laco);
-            save(fila, i + 1);
-        }
+                        .build());
+//                .withQueue(new QueueBuilder(random) //g/g/2/5 2..5 3..5
+//                        .withIntervaloEntrada(2, 5)
+//                        .withIntervaloSaida(3,5)
+//                        .withServidoresDisponiveis(2)
+//                        .withCapcidadeMaxima(5)
+//                        .build());
+        scheduler.execute(2.0);
+        save(scheduler, i);
     }
 
-    private static void save(Fila fila, int i) {
+    private static void save(Scheduler scheduler, int i) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("fila_" + fila.getId() + "_exec_" + i + ".txt"));
-            writer.write(fila.toString());
+            BufferedWriter writer = new BufferedWriter(new FileWriter("execution_" + i + "_print.txt"));
+            writer.write(scheduler.toString());
             writer.flush();
             writer.close();
         } catch (IOException e) {

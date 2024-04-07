@@ -1,23 +1,19 @@
 import java.util.Random;
 
-public class IntervaloTempo {
+public class TimeRange {
     private final int min;
     private final int max;
     private Random random;
 
-    public IntervaloTempo(int min, int max, Random random) {
+    public TimeRange(int min, int max, Random random) {
         this.max = max;
         this.min = min;
         this.random = random;
     }
 
-    public double proximoTempo() {
+    public double next() {
         return (max - min) * random.nextDouble() + min;
 
-    }
-
-    public void setRandom(Random random) {
-        this.random = random;
     }
 
     @Override

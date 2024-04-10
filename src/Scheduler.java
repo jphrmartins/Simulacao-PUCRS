@@ -34,7 +34,7 @@ public class Scheduler {
             eventList.add(Event.newIn(firstIn, 0));
             while (true) {
                 Event event = proxEvento();
-                double currentTimeBeforeEvent = currentTime;
+                queues.forEach(it -> it.updateTime(event, currentTime));
                 currentTime = event.getTime();
                 event.setWasExecuted();
                 if (queues.size() > 1 && event.isOut() && queues.get(queues.size() - 1).getId() != event.getFrom()) {
@@ -43,11 +43,11 @@ public class Scheduler {
                     Event pass = event.toPass();
                     fromQueue.executePass(this);
                     processedEvents.add(pass);
-                    toQueue.execute(this, pass, currentTimeBeforeEvent);
+                    toQueue.execute(this, pass);
                 } else {
                     processedEvents.add(event);
                     Queue queue = queues.get(event.getFrom());
-                    queue.execute(this, event, currentTimeBeforeEvent);
+                    queue.execute(this, event);
                 }
 
             }

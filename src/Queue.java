@@ -33,8 +33,11 @@ public class Queue {
         this.handleOut(scheduler);
     }
 
-    public void execute(Scheduler scheduler, Event event, double currentTimeBeforeEvent) {
-        timeBusy[currentCapacity] += (event.getTime() - currentTimeBeforeEvent);
+    public void updateTime(Event event, double currentTime) {
+        timeBusy[currentCapacity] += (event.getTime() - currentTime);
+    }
+
+    public void execute(Scheduler scheduler, Event event) {
         if (event.isIn()) {
             handleIn(scheduler, false);
         } else if (event.isOut()) {
@@ -91,12 +94,15 @@ public class Queue {
         builder.append("\n===================\n");
         builder.append("Distribuição probabilidades por posição: \n");
 
+        double sumFinal = 0;
         for (int i = 0; i < timeBusy.length; i++) {
-            double probabilidadeAtual = (timeBusy[i] / scheduler.getCurrentTime()) * 100;
+            double probability = (timeBusy[i] / scheduler.getCurrentTime());
             builder.append("\t Ocupacao: ").append(i).append(" -> ")
-                    .append(probabilidadeAtual).append(" %")
+                    .append(probability * 100).append(" %")
                     .append("\n");
+            sumFinal += probability;
         }
+        builder.append("Total: ").append(sumFinal * 100).append("%\n");
 
         builder.append("\n===================\n");
         builder.append("Quantidade de Perda: ");

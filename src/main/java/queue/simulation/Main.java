@@ -17,7 +17,6 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
-        args = new String[]{"model"};
         if (args.length == 0) {
             help();
         } else {
@@ -59,27 +58,6 @@ public class Main {
         System.out.println("java -jar queueSim.jar model");
         System.out.println("or");
         System.out.println("java -jar queueSim.jar --file=<file.json>");
-    }
-
-
-    private static void execute(int i, long[] seeds, int limit) {
-        System.out.println("Starting with index: " + i + " and seed: " + seeds[i]);
-        RandomGenerator random = new RandomLinearCongruentialGenerator(seeds[i], limit);
-        Scheduler scheduler = new Scheduler()
-                .withQueue(new QueueBuilder(random) //g/g/2/3 1..4 3..4
-                        .withInRange(1, 4)
-                        .withExitRange(3, 4)
-                        .withServidors(2)
-                        .withMaxCapacity(3)
-                        .build())
-                .withQueue(new QueueBuilder(random) //g/g/1/5 2..3
-                        .withExitRange(2, 3)
-                        .withServidors(1)
-                        .withMaxCapacity(5)
-                        .build())
-                .printEvent(false);
-        scheduler.execute(1.5);
-        save(scheduler, i);
     }
 
     private static void save(Scheduler scheduler, int i) {

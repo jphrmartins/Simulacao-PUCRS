@@ -3,8 +3,8 @@ plugins {
     id 'application'
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+group = 'queue.simulation'
+version = ''
 
 repositories {
     mavenCentral()

@@ -71,7 +71,7 @@
     }
   ],
   "randomModel": {
-    "interactions": 48,
+    "interactions": 100000,
     "seeds": [
       8795315687
     ]

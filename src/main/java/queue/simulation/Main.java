@@ -48,7 +48,8 @@ public class Main {
         IntStream.range(0, model.getSchedulers().size()).forEach(interaction -> {
             Scheduler scheduler = model.getSchedulers().get(interaction);
             scheduler.execute(2.0);
-            save(scheduler, interaction);
+            String exit = save(scheduler, interaction);
+            System.out.println("Exit on file: " + exit);
         });
 
     }
@@ -60,12 +61,13 @@ public class Main {
         System.out.println("java -jar queueSim.jar --file=<file.json>");
     }
 
-    private static void save(Scheduler scheduler, int i) {
+    private static String save(Scheduler scheduler, int i) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("execution_" + i + "_print.txt"));
             writer.write(scheduler.toString());
             writer.flush();
             writer.close();
+            return "execution_" + i + "_print.txt";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

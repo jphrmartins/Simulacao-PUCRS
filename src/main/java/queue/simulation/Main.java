@@ -17,6 +17,7 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
+        args = new String[]{"model"};
         if (args.length != 1) {
             help();
         } else {

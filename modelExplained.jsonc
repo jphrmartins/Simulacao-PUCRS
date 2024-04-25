@@ -1,0 +1,40 @@
+{
+  "firstArrival": { // Tempo da primeira chegada, caso não discriminado, será 2.0 na primeira fila cadastrada.
+    "where": 1, // ID da fila
+    "when": 2 // Quando
+  },
+  "queues": [ // Filas
+    {
+      "id": 1, // ID
+      "server": 1, // Quantidade de servidores
+      "maxCapacity": 5, // Capacidade maxima, remover caso infinito
+      "in": { // Tempo para a chegada de novos clientes, remover caso seja fila de repasse
+        "min": 2, // Minimo
+        "max": 4 // Maximo
+      },
+      "out": {// Tempo para a saida de clientes em aguardo
+        "min": 1, // Minimo
+        "max": 2 // Maximo
+      }
+    }
+  ],
+  "network": [ // Roteamento das filas após atendimento.
+    {
+      "fromQueueId": 1, // De qual fila
+      "toQueueId": 2, // Para qual fila, deletar caso seja para rua.
+      "probability": 0.8 // Probabilidade
+    }
+  ],
+  "randomModel": { // Modelo Randomico
+    "interactions": 100000, // Quantidade de numeros gerados.
+    "seeds": [ // Sementes caso queria usar modelo Congruente linear
+      8795315687
+    ],
+    "randomNumbers": [
+      0.8,0.6,1
+    ] /*
+    // Numeros randomentso gerados previamente,
+    caso seja passado sera usado ele ao invés do modelo congruente linear
+    */
+  }
+}

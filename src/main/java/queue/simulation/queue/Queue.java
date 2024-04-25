@@ -60,7 +60,7 @@ public class Queue {
         double t = event.getTime() - currentTime;
         if (!timeBusy.isEmpty() && timeBusy.size() > currentCapacity) {
             timeBusy.set(currentCapacity, timeBusy.get(currentCapacity) + t);
-        } else if (maxCapacity == -1){
+        } else if (maxCapacity == -1) {
             timeBusy.add(t);
         } else {
             throw new RuntimeException("Error updating time of event: " + event + " For Queue: " + this);
@@ -112,11 +112,14 @@ public class Queue {
         if (queueDestinations.get(0).getProbability() >= 1) return queueDestinations.get(0).getTo();
         double p = random.nextDouble();
         QueueDestinations destinations;
-        for (int i = 0; i < queueDestinations.size(); i++, p -= destinations.getProbability()) {
+        double destProb = 0;
+        for (int i = 0; i < queueDestinations.size(); i++) {
+            destProb += queueDestinations.get(i).getProbability();
             destinations = queueDestinations.get(i);
-            if (p <= destinations.getProbability()) {
+            if (p <= destProb) {
                 return destinations.getTo();
             }
+
         }
         return null;
     }

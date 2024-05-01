@@ -7,17 +7,13 @@ import queue.simulation.time.TimeHandler;
 import queue.simulation.time.TimeRange;
 import queue.simulation.random.RandomGenerator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class QueueBuilder {
-    private static Set<Integer> takenIds;
-    private static int ID = 0;
+    private static Set<String> takenIds;
     private final RandomGenerator random;
-    private Integer id;
+    private String id;
     private TimeRange tempoEntrada;
     private TimeRange tempoSaida;
     private int servidores;
@@ -31,7 +27,7 @@ public class QueueBuilder {
         queueDestinationsList = new ArrayList<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -40,7 +36,7 @@ public class QueueBuilder {
         return this;
     }
 
-    public QueueBuilder withId(int id) {
+    public QueueBuilder withId(String id) {
         if (takenIds.contains(id)) {
             throw new IdAlreadyTakenException(id);
         }
@@ -68,7 +64,7 @@ public class QueueBuilder {
     }
 
     public Queue build() {
-        if (id == null) return this.withId(ID++).build();
+        if (id == null) return this.withId(UUID.randomUUID().toString()).build();
         if (tempoSaida == null) throw new RequiredFieldOnQueueBuilderException("tempoSaida");
         if (servidores == 0) throw new RequiredFieldOnQueueBuilderException("servidores");
 

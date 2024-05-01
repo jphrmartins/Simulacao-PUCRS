@@ -4,17 +4,17 @@ import queue.simulation.builder.QueueBuilder;
 import queue.simulation.random.RandomGenerator;
 
 public class QueueModel {
-    private int id;
+    private String id;
     private int server;
     private Integer maxCapacity;
     private RangeModel in;
     private RangeModel out;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

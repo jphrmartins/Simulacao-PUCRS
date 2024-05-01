@@ -11,7 +11,7 @@ public class Scheduler {
     private double currentTime;
     private final List<Event> eventList;
     private final List<Event> processedEvents;
-    private final Map<Integer, Queue> queues;
+    private final Map<String, Queue> queues;
     private boolean printEvent;
 
     public Scheduler() {

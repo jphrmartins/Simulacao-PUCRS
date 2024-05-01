@@ -3,14 +3,14 @@ package queue.simulation.model;
 import queue.simulation.scheduler.FirstInEvent;
 
 public class FirstArrivalModel {
-    private int where;
+    private String where;
     private double when;
 
-    public int getWhere() {
+    public String getWhere() {
         return where;
     }
 
-    public void setWhere(int where) {
+    public void setWhere(String where) {
         this.where = where;
     }
 

@@ -23,7 +23,7 @@ public class ModelInfo {
         this.firstArrival = firstArrival;
     }
 
-    public Map<Integer, QueueBuilder> getQueueMap(RandomGenerator randomGenerator) {
+    public Map<String, QueueBuilder> getQueueMap(RandomGenerator randomGenerator) {
         return queues.stream().map(it -> it.toQueue(randomGenerator))
                 .collect(Collectors.toMap(QueueBuilder::getId, Function.identity()));
     }
@@ -32,7 +32,7 @@ public class ModelInfo {
         this.queues = queues;
     }
 
-    public Map<Integer, List<NetworkMappingModel>> getNetwork() {
+    public Map<String, List<NetworkMappingModel>> getNetwork() {
         return network.stream()
                 .collect(Collectors.groupingBy(
                         NetworkMappingModel::getFromQueueId,

@@ -1,11 +1,11 @@
 {
   "firstArrival": { // Tempo da primeira chegada, caso não discriminado, será 2.0 na primeira fila cadastrada.
-    "where": 1, // ID da fila
+    "where": "1", // ID da fila
     "when": 2 // Quando
   },
   "queues": [ // Filas
     {
-      "id": 1, // ID
+      "id": "1", // ID
       "server": 1, // Quantidade de servidores
       "maxCapacity": 5, // Capacidade maxima, remover caso infinito
       "in": { // Tempo para a chegada de novos clientes, remover caso seja fila de repasse
@@ -16,12 +16,21 @@
         "min": 1, // Minimo
         "max": 2 // Maximo
       }
+    },
+    {
+      "id": "2", // ID
+      "server": 1, // Quantidade de servidores
+      "maxCapacity": 5, // Capacidade maxima, remover caso infinito
+      "out": {// Tempo para a saida de clientes em aguardo
+        "min": 1, // Minimo
+        "max": 2 // Maximo
+      }
     }
   ],
   "network": [ // Roteamento das filas após atendimento.
     {
-      "fromQueueId": 1, // De qual fila
-      "toQueueId": 2, // Para qual fila, deletar caso seja para rua.
+      "fromQueueId": "1", // De qual fila
+      "toQueueId": "2", // Para qual fila, deletar caso seja para rua.
       "probability": 0.8 // Probabilidade
     }
   ],

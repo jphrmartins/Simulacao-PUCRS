@@ -1,15 +1,15 @@
 package queue.simulation.scheduler;
 
 public class FirstInEvent {
-    private int where;
+    private String where;
     private double when;
 
-    public FirstInEvent(int where, double when) {
+    public FirstInEvent(String where, double when) {
         this.where = where;
         this.when = when;
     }
 
-    public int getWhere() {
+    public String getWhere() {
         return where;
     }
 

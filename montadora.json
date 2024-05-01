@@ -1,0 +1,79 @@
+{
+  "firstArrival": {
+    "where": 1,
+    "when": 2
+  },
+  "queues": [
+    {
+      "id": 1,
+      "server": 1,
+      "in": {
+        "min": 2,
+        "max": 4
+      },
+      "out": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    {
+      "id": 2,
+      "server": 2,
+      "maxCapacity": 5,
+      "out": {
+        "min": 4,
+        "max": 8
+      }
+    },
+    {
+      "id": 3,
+      "server": 2,
+      "maxCapacity": 10,
+      "out": {
+        "min": 5,
+        "max": 15
+      }
+    }
+  ],
+  "network": [
+    {
+      "fromQueueId": 1,
+      "toQueueId": 2,
+      "probability": 0.8
+    },
+    {
+      "fromQueueId": 1,
+      "toQueueId": 3,
+      "probability": 0.2
+    },
+    {
+      "fromQueueId": 2,
+      "toQueueId": 2,
+      "probability": 0.5
+    },
+    {
+      "fromQueueId": 2,
+      "probability": 0.2
+    },
+    {
+      "fromQueueId": 2,
+      "toQueueId": 1,
+      "probability": 0.3
+    },
+    {
+      "fromQueueId": 3,
+      "toQueueId": 3,
+      "probability": 0.7
+    },
+    {
+      "fromQueueId": 3,
+      "probability": 0.3
+    }
+  ],
+  "randomModel": {
+    "interactions": 100000,
+    "seeds": [
+      8795315687
+    ]
+  }
+}

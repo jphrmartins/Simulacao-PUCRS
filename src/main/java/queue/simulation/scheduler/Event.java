@@ -2,34 +2,34 @@ package queue.simulation.scheduler;
 
 public class Event {
     private Type type;
-    private int from;
-    private Integer to;
+    private String from;
+    private String to;
     private double time;
     private boolean executed;
 
-    private Event(Type type, double time, int from, Integer to) {
+    private Event(Type type, double time, String from, String to) {
         this.type = type;
         this.time = time;
         this.from = from;
         this.to = to;
     }
 
-    private Event(Type type, double time, int from) {
+    private Event(Type type, double time, String from) {
         this.type = type;
         this.time = time;
         this.from = from;
     }
 
-    private Event(Type type, double time, int from, boolean executed) {
+    private Event(Type type, double time, String from, boolean executed) {
         this(type, time, from);
         this.executed = executed;
     }
 
-    public static Event newOut(double tempo, int from, Integer to) {
+    public static Event newOut(double tempo, String from, String to) {
         return new Event(Type.OUT, tempo, from, to);
     }
 
-    public static Event newIn(double tempo, int from) {
+    public static Event newIn(double tempo, String from) {
         return new Event(Type.IN, tempo, from);
     }
 
@@ -49,11 +49,11 @@ public class Event {
         return Type.PASS.equals(type);
     }
 
-    public int getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public Integer getTo() {
+    public String getTo() {
         return to;
     }
 

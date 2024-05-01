@@ -11,12 +11,12 @@ public class TimeHandler {
         this.out = out;
     }
 
-    public Event nextIn(double globalTime, int from) {
+    public Event nextIn(double globalTime, String from) {
         double next = in.next();
         return Event.newIn(globalTime + next, from);
     }
 
-    public Event nextOut(double globalTime, int from, Integer to){
+    public Event nextOut(double globalTime, String from, String to){
         double next = out.next();
         return Event.newOut(globalTime + next, from, to);
     }

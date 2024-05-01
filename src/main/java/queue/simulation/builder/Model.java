@@ -17,11 +17,11 @@ public class Model {
     public Model(ModelInfo model) {
         List<RandomGenerator> randoms = model.getRandomModel().toGenerators();
         schedulers = randoms.stream().map(random -> {
-            Map<Integer, QueueBuilder> queueMap = model.getQueueMap(random);
-            Map<Integer, List<NetworkMappingModel>> networkMappingModelMap = model.getNetwork();
+            Map<String, QueueBuilder> queueMap = model.getQueueMap(random);
+            Map<String, List<NetworkMappingModel>> networkMappingModelMap = model.getNetwork();
             Scheduler scheduler = new Scheduler();
             queueMap.entrySet().stream().map(e -> {
-                        int queueId = e.getKey();
+                        String queueId = e.getKey();
                         QueueBuilder builder = e.getValue();
                         List<NetworkMappingModel> network = networkMappingModelMap.getOrDefault(queueId, new ArrayList<>());
                         builder.withNetwork(network);

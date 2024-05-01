@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class Queue {
-    private final int id;
+    private final String id;
     private final TimeHandler timeHandler;
     private final int servers;
     private final int maxCapacity;
@@ -21,7 +21,7 @@ public class Queue {
     private int currentCapacity;
     private long loss;
 
-    public Queue(int id, TimeHandler timeHandler, int servers, int maxCapacity,
+    public Queue(String id, TimeHandler timeHandler, int servers, int maxCapacity,
                  List<QueueDestinations> destinations, RandomGenerator randomGenerator) {
         this.id = id;
         this.timeHandler = timeHandler;
@@ -40,7 +40,7 @@ public class Queue {
         return timeHandler.hasIn();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -107,7 +107,7 @@ public class Queue {
         }
     }
 
-    private Integer getDestination() {
+    private String getDestination() {
         if (queueDestinations.isEmpty()) return null;
         if (queueDestinations.get(0).getProbability() >= 1) return queueDestinations.get(0).getTo();
         double p = random.nextDouble();

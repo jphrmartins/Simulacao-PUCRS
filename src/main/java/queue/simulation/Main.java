@@ -11,6 +11,8 @@ import queue.simulation.scheduler.Scheduler;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.IntStream;
@@ -22,23 +24,22 @@ public class Main {
         } else {
             ModelInfo model = null;
             if (args[0].equals("model")) {
-                model = getModel("model.json", true);
+                model = getModel("model.json");
             } else if (args[0].startsWith("--file=")) {
                 String file = args[0].split("--file=")[1];
-                model = getModel(file, false);
+                model = getModel(file);
             }
             run(model);
         }
     }
 
 
-    private static ModelInfo getModel(String fileName, boolean model) {
+    private static ModelInfo getModel(String fileName) {
         try {
             String content = new String(Files.readAllBytes(Paths.get(fileName)));
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(content, ModelInfo.class);
         } catch (IOException ex) {
-            if (model) throw new RuntimeException("Could not found defualt model");
             throw new RuntimeException("Could not found file: " + fileName, ex);
         }
     }
@@ -63,7 +64,7 @@ public class Main {
 
     private static String save(Scheduler scheduler, int i) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("execution_" + i + "_print.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("execution_" + i + "_print.txt", StandardCharsets.UTF_8));
             writer.write(scheduler.toString());
             writer.flush();
             writer.close();

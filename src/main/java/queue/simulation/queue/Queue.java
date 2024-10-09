@@ -1,16 +1,19 @@
 package queue.simulation.queue;
 
+import queue.simulation.Main;
 import queue.simulation.random.RandomGenerator;
 import queue.simulation.scheduler.Event;
 import queue.simulation.scheduler.Scheduler;
 import queue.simulation.time.TimeHandler;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Queue {
     private final String id;
+    private final String name;
     private final TimeHandler timeHandler;
     private final int servers;
     private final int maxCapacity;
@@ -21,9 +24,10 @@ public class Queue {
     private int currentCapacity;
     private long loss;
 
-    public Queue(String id, TimeHandler timeHandler, int servers, int maxCapacity,
+    public Queue(String id, String name, TimeHandler timeHandler, int servers, int maxCapacity,
                  List<QueueDestinations> destinations, RandomGenerator randomGenerator) {
         this.id = id;
+        this.name = name;
         this.timeHandler = timeHandler;
         this.maxCapacity = maxCapacity;
         this.servers = servers;
@@ -124,8 +128,18 @@ public class Queue {
         return null;
     }
 
+    public List<Statistics> calculateStatistc(Scheduler scheduler) {
+        List<Statistics> statistics = new ArrayList<>(timeBusy.size());
+        for (int i = 0; i < timeBusy.size(); i++) {
+            double mi = timeHandler.generateMi();
+            double probability = (timeBusy.get(i) / scheduler.getCurrentTime());
+            statistics.add(new Statistics(i, BigDecimal.valueOf(mi), probability, servers));
+        }
+        return statistics;
+    }
+
     public String print(Scheduler scheduler) {
-        StringBuilder builder = new StringBuilder("Fila: " + id + "\n");
+        StringBuilder builder = new StringBuilder("Fila: " + id + " - Name: " + name + "\n");
         builder.append("Notacao: ")
                 .append("g/g/")
                 .append(servers)
@@ -150,6 +164,39 @@ public class Queue {
             sumFinal += probability;
         }
         builder.append("Total: ").append(sumFinal * 100).append("%\n");
+
+        builder.append("I,PIi,N,D,U,W\n");
+        List<Statistics> statistics = calculateStatistc(scheduler);
+        statistics.forEach( it ->
+            builder.append(it.getI())
+                    .append(',')
+                    .append(it.getProb().toPlainString())
+                    .append(',')
+                    .append(it.getPopulation().toPlainString())
+                    .append(',')
+                    .append(it.getFlow().toPlainString())
+                    .append(',')
+                    .append(it.getUsage().toPlainString())
+                    .append(',')
+                    .append(it.getResponseTime().toPlainString())
+                    .append('\n')
+        );
+        Statistics total = statistics
+                .stream()
+                .reduce(new Statistics(), Statistics::merge);
+
+        builder.append(total.getI())
+                .append(',')
+                .append(total.getProb().toPlainString())
+                .append(',')
+                .append(total.getPopulation().toPlainString())
+                .append(',')
+                .append(total.getFlow().toPlainString())
+                .append(',')
+                .append(total.getUsage().toPlainString())
+                .append(',')
+                .append(total.getResponseTime().toPlainString())
+                .append('\n');
 
         builder.append("\n===================\n");
         builder.append("Quantidade de Perda: ");

@@ -16,7 +16,10 @@ public class TimeRange {
     public double next() {
         double rand = random.nextDouble();
         return (max - min) * rand + min;
+    }
 
+    public double generateMi() {
+        return 60.0 / ((max + min * 1.0) / 2.0);
     }
 
     @Override

@@ -21,6 +21,10 @@ public class TimeHandler {
         return Event.newOut(globalTime + next, from, to);
     }
 
+    public double generateMi() {
+        return out.generateMi();
+    }
+
     public boolean hasIn() {
         return in != null;
     }

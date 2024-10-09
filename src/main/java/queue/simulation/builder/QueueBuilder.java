@@ -14,6 +14,7 @@ public class QueueBuilder {
     private static Set<String> takenIds;
     private final RandomGenerator random;
     private String id;
+    private String name;
     private TimeRange tempoEntrada;
     private TimeRange tempoSaida;
     private int servidores;
@@ -44,6 +45,11 @@ public class QueueBuilder {
         return this;
     }
 
+    public QueueBuilder withName(String name) {
+        this.name = name;
+        return this;
+    }
+
     public QueueBuilder withExitRange(int min, int max) {
         tempoSaida = new TimeRange(min, max, random);
         return this;
@@ -70,6 +76,7 @@ public class QueueBuilder {
 
         return new Queue(
                 id,
+                name,
                 new TimeHandler(this.tempoEntrada, this.tempoSaida),
                 this.servidores,
                 this.capacidadeMaxima,

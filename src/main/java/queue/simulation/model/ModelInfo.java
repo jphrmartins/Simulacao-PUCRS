@@ -14,6 +14,7 @@ public class ModelInfo {
     private List<QueueModel> queues;
     private List<NetworkMappingModel> network;
     private RandomModel randomModel;
+    private String fileName;
 
     public FirstArrivalModel getFirstArrival() {
         return firstArrival;
@@ -51,6 +52,14 @@ public class ModelInfo {
 
     public void setNetwork(List<NetworkMappingModel> network) {
         this.network = network;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public RandomModel getRandomModel() {

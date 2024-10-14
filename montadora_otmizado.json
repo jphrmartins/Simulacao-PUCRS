@@ -7,7 +7,7 @@
     {
       "id": 1,
       "name": "Linha de Montagem",
-      "server": 1,
+      "server": 2,
       "in": {
         "min": 2,
         "max": 4
@@ -20,8 +20,8 @@
     {
       "id": 2,
       "name": "Tinturaria",
-      "server": 2,
-      "maxCapacity": 5,
+      "server": 5,
+      "maxCapacity": 8,
       "out": {
         "min": 4,
         "max": 8
@@ -30,7 +30,7 @@
     {
       "id": 3,
       "name": "Qualidade",
-      "server": 2,
+      "server": 5,
       "maxCapacity": 10,
       "out": {
         "min": 5,
@@ -76,7 +76,7 @@
     },
     {
       "fromQueueId": 3,
-      "probability": 0.2
+      "probability": 0.3
     }
   ],
   "randomModel": {

@@ -38,7 +38,9 @@ public class Main {
         try {
             String content = new String(Files.readAllBytes(Paths.get(fileName)));
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(content, ModelInfo.class);
+            ModelInfo modelInfo = mapper.readValue(content, ModelInfo.class);
+            modelInfo.setFileName(fileName);
+            return modelInfo;
         } catch (IOException ex) {
             throw new RuntimeException("Could not found file: " + fileName, ex);
         }
@@ -49,7 +51,7 @@ public class Main {
         IntStream.range(0, model.getSchedulers().size()).forEach(interaction -> {
             Scheduler scheduler = model.getSchedulers().get(interaction);
             scheduler.execute(2.0);
-            String exit = save(scheduler, interaction);
+            String exit = save(scheduler, interaction, modelInfo.getFileName());
             System.out.println("Exit on file: " + exit);
         });
 
@@ -62,13 +64,14 @@ public class Main {
         System.out.println("java -jar queueSim.jar --file=<file.json>");
     }
 
-    private static String save(Scheduler scheduler, int i) {
+    private static String save(Scheduler scheduler, int i, String fileName) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("execution_" + i + "_print.txt", StandardCharsets.UTF_8));
+            String resultName = "execution_" + fileName + "_" + i + "_print.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(resultName, StandardCharsets.UTF_8));
             writer.write(scheduler.toString());
             writer.flush();
             writer.close();
-            return "execution_" + i + "_print.txt";
+            return resultName;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

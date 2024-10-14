@@ -29,9 +29,9 @@ public class Statistics {
         this.responseTime = calculateReponseTime(population, flow);
     }
 
-    public Statistics(BigDecimal population, BigDecimal flow, BigDecimal usage, BigDecimal responseTime) {
+    public Statistics(BigDecimal prob, BigDecimal population, BigDecimal flow, BigDecimal usage, BigDecimal responseTime) {
         this.i = -1;
-        this.prob = new BigDecimal(-1);
+        this.prob = prob;
         this.population = population;
         this.flow = flow;
         this.usage = usage;
@@ -40,6 +40,7 @@ public class Statistics {
 
     public Statistics merge(Statistics toMerge) {
         return new Statistics(
+                prob.add(toMerge.prob),
                 population.add(toMerge.population),
                 flow.add(toMerge.flow),
                 usage.add(toMerge.usage),
